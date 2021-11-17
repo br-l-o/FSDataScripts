@@ -1,7 +1,7 @@
 ﻿#r "nuget: FSharp.Data"
 open FSharp.Data
 
-type Football = CsvProvider< @"data/FootballResults.csv">
+type Football = CsvProvider<"https://raw.githubusercontent.com/isaacabraham/get-programming-fsharp/master/data/FootballResults.csv">
 let data = Football.GetSample().Rows |> Seq.toArray
 
 printf "Football Games Results: "
