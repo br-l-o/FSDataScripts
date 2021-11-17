@@ -1,5 +1,7 @@
 ﻿#r "nuget: FSharp.Data"
+#r "nuget: XPlot.Plotly"
 open FSharp.Data
+open XPlot.Plotly
 
 fsi.ShowDeclarationValues <- false
 
@@ -23,3 +25,13 @@ let GetLaureates =
     nlaureates.Laureates |> Array.map (fun x -> match x.Surname with
                                                    | None -> $"{x.Firstname}"
                                                    | Some y -> $"{y}, {x.Firstname}") |> Set.ofArray
+
+let GroupedCountryLaureates = nlaureates.Laureates
+                              |> Array.map (fun x -> x.BornCountryCode.String)
+                              |> Seq.countBy id
+                              |> Seq.filter (fun (x, _) -> x <> None)
+                              |> Seq.map (fun (x, y) -> (x.Value, y))
+                              |> Seq.sortByDescending snd
+
+let layout = Layout(title = $"Nobel Laureates per country (top 10)")
+GroupedCountryLaureates |> Seq.truncate 10 |> Chart.Bar |> Chart.WithLayout layout |> Chart.WithHeight 500 |> Chart.WithWidth 700 |> Chart.Show
