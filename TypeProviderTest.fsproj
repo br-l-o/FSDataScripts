@@ -11,6 +11,8 @@
         <None Include="JsonExchangeRates.fsx" />
         <None Include="JsonPokedex.fsx" />
         <None Include="JsonUSCongress.fsx" />
+        <None Include="JsonNasa.fsx" />
+        <None Include="JsonReddit.fsx" />
     </ItemGroup>
 
     <ItemGroup>
