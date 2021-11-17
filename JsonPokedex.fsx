@@ -1,5 +1,7 @@
 ﻿#r "nuget: FSharp.Data"
+#r "nuget: XPlot.Plotly"
 open FSharp.Data
+open XPlot.Plotly
 
 // pokedex example (First 151 only)
 [<Literal>]
@@ -13,6 +15,15 @@ let PrintPokedexEntry (x: Pokedex.Pokemon) =
     printfn $"Name: {x.Name}"
     printfn $"Height: {x.Height}"
     printfn $"Weight: {x.Weight}"
+    
+let GetTypeCounts count =
+    dex.Pokemon
+                |> Array.map (fun x -> x.Type)
+                |> Array.concat
+                |> Seq.countBy id
+                |> Seq.sortByDescending (snd)
+                |> Seq.truncate count
+                |> List.ofSeq
 
 // print only details for ghost-types
 printfn "Ghost-type Pokemon basic details: "
@@ -38,3 +49,7 @@ for i in dex.Pokemon
          |> Array.filter (fun x -> (x.Weaknesses |> Array.contains "Electric")
                                    && (x.Weaknesses |> Array.contains "Ghost")) do
     PrintPokedexEntry i
+
+let layout = Layout(title = $"Top Pokemon Types")
+let typeCountsTest = GetTypeCounts 10
+typeCountsTest |> Chart.Bar |> Chart.WithLayout layout |> Chart.WithHeight 500 |> Chart.WithWidth 700 |> Chart.Show
