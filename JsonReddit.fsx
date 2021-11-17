@@ -1,5 +1,4 @@
 ﻿#r "nuget: FSharp.Data"
-open System
 open FSharp.Data
 
 [<Literal>]

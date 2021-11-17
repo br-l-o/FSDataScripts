@@ -1,5 +1,4 @@
 ﻿#r "nuget: FSharp.Data"
-open System
 open FSharp.Data
 
 // we don't need all that info

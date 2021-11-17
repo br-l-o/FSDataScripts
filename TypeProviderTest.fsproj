@@ -13,6 +13,7 @@
         <None Include="JsonUSCongress.fsx" />
         <None Include="JsonNasa.fsx" />
         <None Include="JsonReddit.fsx" />
+        <None Include="JsonNobel.fsx" />
     </ItemGroup>
 
     <ItemGroup>
