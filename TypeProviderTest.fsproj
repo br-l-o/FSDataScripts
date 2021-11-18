@@ -15,6 +15,7 @@
         <None Include="JsonReddit.fsx" />
         <None Include="JsonNobel.fsx" />
         <None Include="CsvCovid.fsx" />
+        <None Include="JsonWttr.fsx" />
     </ItemGroup>
 
     <ItemGroup>
