@@ -14,7 +14,7 @@
         <None Include="JsonNasa.fsx" />
         <None Include="JsonReddit.fsx" />
         <None Include="JsonNobel.fsx" />
-        <None Include="JsonCovid.fsx" />
+        <None Include="CsvCovid.fsx" />
     </ItemGroup>
 
     <ItemGroup>
