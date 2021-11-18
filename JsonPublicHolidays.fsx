@@ -7,7 +7,13 @@ type PublicHolidays = JsonProvider<holidaysJson>
 let GetPublicHolidays countryCode year =
     PublicHolidays.Load($"https://date.nager.at/api/v2/publicholidays/{year}/{countryCode}")
     
-let us2021Holidays =
-    GetPublicHolidays "US" 2021
+let GetHolidayList country year =
+    GetPublicHolidays country year
     |> Array.map (fun x -> (x.LocalName, x.Date.ToShortDateString()))
-
+    
+let us2021Holidays = GetHolidayList "US" 2021
+    
+let gt2021Holidays = GetHolidayList "GT" 2021
+    
+let ca2021Holidays = GetHolidayList "CA" 2021
+ 
