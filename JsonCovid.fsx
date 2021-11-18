@@ -33,6 +33,7 @@ let basicCovidDataByDay startFromToday =
               TotalCases = x.Tot_cases
               TotalDeaths = x.Tot_death
           })
+          
 [<Literal>]
 let usCovidCasePath = __SOURCE_DIRECTORY__ + @"/data/united_states_covid19_cases_deaths_and_testing_by_state.csv"
 type SevenDayCaseRates = CsvProvider<usCovidCasePath, SkipRows=2>
@@ -87,8 +88,7 @@ let stateVaxxDataSerialized = stateVaxxData.Rows
                               // this column could come up null
                               |> Seq.filter (fun x -> not <| System.Double.IsNaN(x.Additional_Doses_Vax_Pct |> double))
                               // ignore total US and long-term care facility counts
-                              |> Seq.filter (fun x -> x.Location <> "US")
-                              |> Seq.filter (fun x -> x.Location <> "LTC")
+                              |> Seq.filter (fun x -> x.Location <> "US" || x.Location <> "LTC")
                               |> Seq.map (fun x ->
                                             {
                                                 Date = x.Date
