@@ -70,18 +70,30 @@ for i in
 let layout = Layout(title = $"Top 10 Pokemon Types")
 let typeCountsTest = GetTypeCounts 10
 
-typeCountsTest
-|> Chart.Bar
-|> Chart.WithLayout layout
-|> Chart.WithHeight 500
-|> Chart.WithWidth 700
-|> Chart.Show
+let getHtml (chart: PlotlyChart) = chart.GetHtml()
 
-dex.Pokemon 
-|> Array.map (fun x -> x.Type) 
-|> Seq.countBy (fun x -> x |> Array.length)
-|> Chart.Bar
-|> Chart.WithLayout (Layout(title = $"How many Pokemon have one of more types?"))
-|> Chart.WithHeight 500
-|> Chart.WithWidth 700
-|> Chart.Show
+let GetHtmlChart title (sequence: seq<'a * 'b>) =
+    let titleLayout = Layout(title = title)
+    sequence
+    |> Chart.Bar
+    |> Chart.WithLayout titleLayout
+    |> Chart.WithHeight 500
+    |> Chart.WithWidth 700
+    |> getHtml
+    
+let DisplayChart title (sequence: seq<'a * 'b>)  =
+    let titleLayout = Layout(title = title)
+    sequence
+    |> Chart.Bar
+    |> Chart.WithLayout titleLayout
+    |> Chart.WithHeight 500
+    |> Chart.WithWidth 700
+    |> Chart.Show
+
+let typesCountHtml = typeCountsTest |> GetHtmlChart "Top 10 Pokemon types"
+
+let typeArrayCount =
+    dex.Pokemon 
+    |> Array.map (fun x -> x.Type) 
+    |> Seq.countBy (fun x -> x |> Array.length)
+    |> GetHtmlChart "Amount of types per Pokemon"
