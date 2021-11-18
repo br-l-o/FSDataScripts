@@ -16,6 +16,8 @@
         <None Include="JsonNobel.fsx" />
         <None Include="CsvCovid.fsx" />
         <None Include="JsonWttr.fsx" />
+        <None Include="JsonNationalize.fsx" />
+        <None Include="JsonPublicHolidays.fsx" />
     </ItemGroup>
 
     <ItemGroup>
