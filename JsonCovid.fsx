@@ -99,7 +99,9 @@ let stateVaxxDataSerialized = stateVaxxData.Rows
                                                 TotalPfizer = x.Distributed_Pfizer
                                             })
                               
-let orderStatesByTotalDoses ascending =
+let orderStatesByCurrentTotalDoses ascending =
+    let maxDateTime = stateVaxxDataSerialized |> Seq.map (fun x -> x.Date) |> Seq.max
+    let mostCurrentSerializedData = stateVaxxDataSerialized |> Seq.filter (fun x -> x.Date = maxDateTime)
     if ascending
-        then stateVaxxDataSerialized |> Seq.sortBy (fun x -> x.TotalDoses)
-        else stateVaxxDataSerialized |> Seq.sortByDescending (fun x -> x.TotalDoses)
+        then mostCurrentSerializedData |> Seq.sortBy (fun x -> x.TotalDoses)
+        else mostCurrentSerializedData |> Seq.sortByDescending (fun x -> x.TotalDoses)
