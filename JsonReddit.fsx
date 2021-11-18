@@ -3,6 +3,7 @@ open FSharp.Data
 
 [<Literal>]
 let subredditFormat = "https://www.reddit.com/r/all.json"
+
 type Subreddit = JsonProvider<subredditFormat>
 
 let GetSubredditJson sub =
@@ -10,8 +11,13 @@ let GetSubredditJson sub =
 
 let GetLatestPostTitles sub =
     let currentSub = GetSubredditJson sub
-    currentSub.Data.Children |> Array.map (fun x -> x.Data.Title)
-    
+
+    currentSub.Data.Children
+    |> Array.map (fun x -> x.Data.Title)
+
 let GetYouTubeLinks sub =
     let currentSub = GetSubredditJson sub
-    currentSub.Data.Children |> Array.filter (fun x -> x.Data.Url.Contains("youtube.com")) |> Array.map (fun x -> (x.Data.Title, x.Data.Url))
+
+    currentSub.Data.Children
+    |> Array.filter (fun x -> x.Data.Url.Contains("youtube.com"))
+    |> Array.map (fun x -> (x.Data.Title, x.Data.Url))
