@@ -18,6 +18,9 @@ let PrintPokedexEntry (x: Pokedex.Pokemon) =
     printfn $"Name: {x.Name}"
     printfn $"Height: {x.Height}"
     printfn $"Weight: {x.Weight}"
+    
+let GeneratePokedexEntry (x: Pokedex.Pokemon) =
+    sprintf "ID: %d\nName: %s\nHeight: %s\nWeight: %s" x.Id x.Name x.Height x.Weight
 
 let GetTypeCounts count =
     dex.Pokemon
@@ -28,44 +31,68 @@ let GetTypeCounts count =
     |> Seq.truncate count
     |> List.ofSeq
 
-// print only details for ghost-types
-printfn "Ghost-type Pokemon basic details: "
-
-for i in
+//// print only details for ghost-types
+//printfn "Ghost-type Pokemon basic details: "
+//
+//for i in
+//    dex.Pokemon
+//    |> Array.filter (fun x -> x.Type |> Array.contains "Ghost") do
+//    PrintPokedexEntry i
+let ghosts =
     dex.Pokemon
-    |> Array.filter (fun x -> x.Type |> Array.contains "Ghost") do
-    PrintPokedexEntry i
+    |> Array.filter (fun x -> x.Type |> Array.contains "Ghost")
+    |> Array.map (fun x -> x |> GeneratePokedexEntry)
+    
+//// print only details for pokemon taller than 1.5 m
+//printfn "Pokemon taller than (or equal to) 1.5 m: "
+//
+//for i in
+//    dex.Pokemon
+//    |> Array.filter (fun x -> ((x.Height.Split [| ' ' |]).[0] |> float) > 1.5) do
+//    PrintPokedexEntry i
 
-// print only details for pokemon taller than 1.5 m
-printfn "Pokemon taller than (or equal to) 1.5 m: "
-
-for i in
+let tall =
     dex.Pokemon
-    |> Array.filter (fun x -> ((x.Height.Split [| ' ' |]).[0] |> float) > 1.5) do
-    PrintPokedexEntry i
+    |> Array.filter (fun x -> ((x.Height.Split [| ' ' |]).[0] |> float) > 1.5)
+    |> Array.map (fun x -> x |> GeneratePokedexEntry)
 
-// print only details for pokemon smaller than 1 m
-printfn "Pokemon taller than (or equal to) 1.5 m: "
-
-for i in
+//// print only details for pokemon smaller than 1 m
+//printfn "Pokemon taller than (or equal to) 1.5 m: "
+//
+//for i in
+//    dex.Pokemon
+//    |> Array.filter (fun x -> ((x.Height.Split [| ' ' |]).[0] |> float) < 1.0) do
+//    PrintPokedexEntry i
+let small =
     dex.Pokemon
-    |> Array.filter (fun x -> ((x.Height.Split [| ' ' |]).[0] |> float) < 1.0) do
-    PrintPokedexEntry i
+    |> Array.filter (fun x -> ((x.Height.Split [| ' ' |]).[0] |> float) < 1.0)
+    |> Array.map (fun x -> x |> GeneratePokedexEntry)
 
-// print eevee's evolutions (names that contain "eon")
-for i in
+//// print eevee's evolutions (names that contain "eon")
+//for i in
+//    dex.Pokemon
+//    |> Array.filter (fun x -> x.Name.Contains("eon") && x.Name <> "Charmeleon") do
+//    PrintPokedexEntry i
+let eeveelutions =
     dex.Pokemon
-    |> Array.filter (fun x -> x.Name.Contains("eon") && x.Name <> "Charmeleon") do
-    PrintPokedexEntry i
+    |> Array.filter (fun x -> x.Name.Contains("eon") && x.Name <> "Charmeleon")
+    |> Array.map (fun x -> x |> GeneratePokedexEntry)
 
-// print pokemon that are weak against electric and ghost types
-for i in
+//// print pokemon that are weak against electric and ghost types
+//for i in
+//    dex.Pokemon
+//    |> Array.filter
+//        (fun x ->
+//            (x.Weaknesses |> Array.contains "Electric")
+//            && (x.Weaknesses |> Array.contains "Ghost")) do
+//    PrintPokedexEntry i
+let electricGhostWeak =
     dex.Pokemon
     |> Array.filter
         (fun x ->
             (x.Weaknesses |> Array.contains "Electric")
-            && (x.Weaknesses |> Array.contains "Ghost")) do
-    PrintPokedexEntry i
+            && (x.Weaknesses |> Array.contains "Ghost"))
+    |> Array.map (fun x -> x |> GeneratePokedexEntry)
 
 let layout = Layout(title = $"Top 10 Pokemon Types")
 let typeCountsTest = GetTypeCounts 10
