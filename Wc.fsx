@@ -8,6 +8,7 @@ fsi.ShowDeclarationValues <- false
 let countWords (contents: string) =
     let regex = Regex("[^a-zA-Z0-9 -]")
     regex.Replace(contents, "").Split()
+    |> Array.sortByDescending id
     |> Array.countBy id
     
 let getMostCommonWords limit (contents: string) =
