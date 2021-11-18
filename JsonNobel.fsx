@@ -32,6 +32,24 @@ let GroupedCountryLaureates = nlaureates.Laureates
                               |> Seq.filter (fun (x, _) -> x <> None)
                               |> Seq.map (fun (x, y) -> (x.Value, y))
                               |> Seq.sortByDescending snd
-
-let layout = Layout(title = $"Nobel Laureates per country (top 10)")
-GroupedCountryLaureates |> Seq.truncate 10 |> Chart.Bar |> Chart.WithLayout layout |> Chart.WithHeight 500 |> Chart.WithWidth 700 |> Chart.Show
+                              
+// not working with Linux for some reason... 
+let GenerateLaureatesChart count layout =
+    GroupedCountryLaureates
+    |> Seq.truncate count
+    |> Chart.Bar
+    |> Chart.WithLayout layout
+    |> Chart.WithHeight 500
+    |> Chart.WithWidth 700
+    |> Chart.Show
+    
+let GenerateLaureatesHtml count layout =
+    let chart = GroupedCountryLaureates
+                |> Seq.truncate count
+                |> Chart.Bar
+                |> Chart.WithLayout layout
+                |> Chart.WithHeight 500
+                |> Chart.WithWidth 700
+    chart.GetHtml()
+    
+let pdf = Layout(title = $"Countries with most Nobel Laureates") |> GenerateLaureatesHtml 10 
