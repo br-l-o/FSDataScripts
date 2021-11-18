@@ -1,4 +1,3 @@
-open System.IO
 
 #r "nuget: FSharp.Data"
 

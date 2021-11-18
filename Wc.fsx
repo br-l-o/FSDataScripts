@@ -1,7 +1,5 @@
 #r "nuget: XPlot.Plotly"
-open System
 open System.IO
-open System.Linq
 open System.Text.RegularExpressions
 open XPlot.Plotly
 
