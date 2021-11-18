@@ -76,3 +76,12 @@ typeCountsTest
 |> Chart.WithHeight 500
 |> Chart.WithWidth 700
 |> Chart.Show
+
+dex.Pokemon 
+|> Array.map (fun x -> x.Type) 
+|> Seq.countBy (fun x -> x |> Array.length)
+|> Chart.Bar
+|> Chart.WithLayout (Layout(title = $"How many Pokemon have one of more types?"))
+|> Chart.WithHeight 500
+|> Chart.WithWidth 700
+|> Chart.Show
