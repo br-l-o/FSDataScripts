@@ -50,6 +50,6 @@ for i in dex.Pokemon
                                    && (x.Weaknesses |> Array.contains "Ghost")) do
     PrintPokedexEntry i
 
-let layout = Layout(title = $"Top Pokemon Types")
+let layout = Layout(title = $"Top 10 Pokemon Types")
 let typeCountsTest = GetTypeCounts 10
 typeCountsTest |> Chart.Bar |> Chart.WithLayout layout |> Chart.WithHeight 500 |> Chart.WithWidth 700 |> Chart.Show
