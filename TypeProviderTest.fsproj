@@ -18,6 +18,7 @@
         <None Include="JsonWttr.fsx" />
         <None Include="JsonNationalize.fsx" />
         <None Include="JsonPublicHolidays.fsx" />
+        <None Include="Wc.fsx" />
     </ItemGroup>
 
     <ItemGroup>
