@@ -24,6 +24,10 @@
         <None Include="ExcelEduData.fsx" />
         <None Include="MediaWikiAPI.fsx" />
         <None Include="JsonUrlShortener.fsx" />
+        <None Include="JsonFakerApi\JsonFakerCreditCards.fsx" />
+        <None Include="JsonFakerApi\JsonFakerCompanies.fsx" />
+        <None Include="JsonFakerApi\JsonFakerBooks.fsx" />
+        <None Include="JsonFakerApi\JsonFakerAddress.fsx" />
     </ItemGroup>
 
     <ItemGroup>
