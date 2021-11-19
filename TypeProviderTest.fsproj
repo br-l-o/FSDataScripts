@@ -21,9 +21,11 @@
         <None Include="Wc.fsx" />
         <None Include="JsonLyrics.fsx" />
         <None Include="JsonOpenWhyd.fsx" />
+        <None Include="ExcelEduData.fsx" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="ExcelProvider" Version="2.0.0" />
       <PackageReference Include="FSharp.Data" Version="4.2.5" />
       <PackageReference Include="XPlot.Plotly" Version="4.0.6" />
     </ItemGroup>
