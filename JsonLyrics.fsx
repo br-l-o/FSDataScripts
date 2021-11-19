@@ -7,9 +7,33 @@ let lyricBase =
 
 type Lyric = JsonProvider<lyricBase>
 
-let GetLyrics (artist: string) (songTitle: string) =
+type LyricDetails =
+    { Artist: string
+      SongTitle: string
+      Lyrics: string }
+
+let GetLyricDetails (artist: string) (songTitle: string) =
     let query =
         $"https://api.lyrics.ovh/v1/{artist}/{songTitle}"
 
     let lyric = Lyric.Load(query)
-    lyric.Lyrics
+
+    { Artist = artist
+      SongTitle = songTitle
+      Lyrics = lyric.Lyrics }
+
+let LongestSong (lyricDetails: LyricDetails list) =
+    let largest = lyricDetails
+                  |> List.maxBy (fun x -> x.Lyrics |> String.length)
+    
+    (largest.Artist, largest.SongTitle, largest.Lyrics |> String.length)
+    
+let lyricList =
+    [ GetLyricDetails "Kate Bush" "Cloudbusting"
+      GetLyricDetails "The Cure" "A Forest"
+      GetLyricDetails "My Bloody Valentine" "Only Shallow"
+      GetLyricDetails "JPEGMAFIA" "Jesus Forgive Me, I Am A Thot"
+      GetLyricDetails "Wu-Tang Clan" "Method Man"
+      GetLyricDetails "Joy Division" "Shadowplay"]
+    
+let longestSong = LongestSong lyricList
