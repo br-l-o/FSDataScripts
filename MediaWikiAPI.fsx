@@ -15,18 +15,60 @@ type MediaWikiContents =
       LatestTimestamp: DateTimeOffset
       License: (string * string) }
 
+// this can fail, so throw a Result error to make life easier
 let WikipediaSearchResponse (languageCode: string) (query: string) =
-    MediaWikiResponse.Load($"https://{languageCode}.wikipedia.org/w/rest.php/v1/page/{query}")
+    try
+        Ok(MediaWikiResponse.Load($"https://{languageCode}.wikipedia.org/w/rest.php/v1/page/{query.Replace(' ', '_')}"))
+    with
+    | :? System.InvalidOperationException as ex -> Error ex.Message
 
 let WikipediaSearchResponseContents languageCode query =
     let response =
         WikipediaSearchResponse languageCode query
 
-    { Id = response.Id
-      Title = response.Title
-      LatestTimestamp = response.Latest.Timestamp
-      License = (response.License.Title, response.License.Url) }
+    match response with
+    | Ok x ->
+        Ok
+            { Id = x.Id
+              Title = x.Title
+              LatestTimestamp = x.Latest.Timestamp
+              License = (x.License.Title, x.License.Url) }
+    | Error x -> Error x
 
 let EnglishWikipediaSearchResponse (query: string) = WikipediaSearchResponse "en" query
 
-let spanishSearch = WikipediaSearchResponse "es" "Google"
+let CountResults (results: seq<Result<MediaWikiContents, string>>) =
+    results
+    |> Seq.map
+        (fun x ->
+            match x with
+            | Ok _ -> "SUCCESS"
+            | Error _ -> "FAILURE")
+    |> Seq.countBy id
+
+let countrySeq =
+    seq {
+        "Liberia"
+        "Lisbon"
+        "Raleigh, North Carolina"
+        "Atlanta"
+        "Memphis, Tennessee"
+        "dfasfsdfgs"
+        "eeeeeeeeeeeeee"
+    }
+
+let deserializedResults =
+    countrySeq
+    |> Seq.map (WikipediaSearchResponseContents "en")
+    |> Seq.map
+        (fun x ->
+            match x with
+            | Ok x -> Some x
+            | Error _ -> None)
+    |> Seq.filter (fun x -> x |> Option.isSome)
+    |> Seq.map (fun x -> x.Value)
+
+let responseSuccessCount =
+    countrySeq
+    |> Seq.map (WikipediaSearchResponseContents "en")
+    |> CountResults
