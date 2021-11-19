@@ -16,8 +16,8 @@ let testAddresses = GetAddresses(100)
 let americanAddresses =
     match testAddresses with
     | Error x -> Error "No addresses to handle."
-    | Ok x -> 
+    | Ok y -> 
         Ok (
             // given fake data, either one would be considered a US address
-            x.Data |> Array.filter (fun x -> x.Country.Contains("United States") || x.CountyCode = "US")
+            y.Data |> Array.filter (fun x -> x.Country.Contains("United States") || x.CountyCode = "US")
         )

@@ -18,7 +18,7 @@ let testAddresses = GetBooks(100)
 let ISBNValues = 
     match testAddresses with
     | Error x -> Error "No books to process."
-    | Ok x -> 
+    | Ok y -> 
         Ok (
-            x.Data |> Array.map (fun x -> x.Isbn)
+            y.Data |> Array.map (fun x -> x.Isbn)
         )
