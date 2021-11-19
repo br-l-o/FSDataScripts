@@ -13,14 +13,17 @@ type LyricDetails =
       Lyrics: string }
 
 let GetLyricDetails (artist: string) (songTitle: string) =
-    let query =
-        $"https://api.lyrics.ovh/v1/{artist}/{songTitle}"
+    try
+        let query =
+            $"https://api.lyrics.ovh/v1/{artist}/{songTitle}"
 
-    let lyric = Lyric.Load(query)
+        let lyric = Lyric.Load(query)
 
-    { Artist = artist
-      SongTitle = songTitle
-      Lyrics = lyric.Lyrics }
+        { Artist = artist
+          SongTitle = songTitle
+          Lyrics = lyric.Lyrics }
+    with
+        |_ -> {Artist = "N/A"; SongTitle = "N/A"; Lyrics = "N/A"}
 
 let LongestSong (lyricDetails: LyricDetails list) =
     let largest = lyricDetails
