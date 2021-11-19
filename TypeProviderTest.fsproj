@@ -23,6 +23,7 @@
         <None Include="JsonOpenWhyd.fsx" />
         <None Include="ExcelEduData.fsx" />
         <None Include="MediaWikiAPI.fsx" />
+        <None Include="JsonUrlShortener.fsx" />
     </ItemGroup>
 
     <ItemGroup>
