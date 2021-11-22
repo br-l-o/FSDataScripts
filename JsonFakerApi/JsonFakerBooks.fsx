@@ -3,22 +3,21 @@ open FSharp.Data
 
 fsi.ShowDeclarationValues <- false
 
-let [<Literal>] booksTemplate = "https://fakerapi.it/api/v1/books?_quantity=1"
+[<Literal>]
+let booksTemplate =
+    "https://fakerapi.it/api/v1/books?_quantity=1"
 
 type Books = JsonProvider<booksTemplate>
 
-let GetBooks (quantity: int) = 
+let GetBooks (quantity: int) =
     try
-        Ok (Books.Load($"https://fakerapi.it/api/v1/books?_quantity={quantity}"))
+        Ok(Books.Load($"https://fakerapi.it/api/v1/books?_quantity={quantity}"))
     with
-        | _ -> Error "Error retrieving addresses. Try again later."
+    | _ -> Error "Error retrieving addresses. Try again later."
 
 let testAddresses = GetBooks(100)
 
-let ISBNValues = 
+let ISBNValues =
     match testAddresses with
     | Error x -> Error "No books to process."
-    | Ok y -> 
-        Ok (
-            y.Data |> Array.map (fun x -> x.Isbn)
-        )
+    | Ok y -> Ok(y.Data |> Array.map (fun x -> x.Isbn))
