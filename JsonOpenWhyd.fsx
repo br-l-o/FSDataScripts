@@ -43,5 +43,5 @@ let getHotTrackDetails =
             (x.Name
              , match x.Pl with
                | None -> "N/A"
-               | Some x -> x.Name
+               | Some x -> x.Name.JsonValue.ToString()
              , x.Score))
